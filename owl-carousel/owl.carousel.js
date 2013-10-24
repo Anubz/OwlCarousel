@@ -656,18 +656,31 @@ if ( typeof Object.create !== "function" ) {
 		},
 
 		afterGo : function(){
+
 			var base = this;
 			base.checkPagination();
 			base.checkNavigation();
 			base.eachMoveUpdate();
+			base.getPrevItem()
 
-			if(typeof base.options.afterMove === "function") {
-				base.options.afterMove.apply(this,[base.$elem]);
+			base.AnubzSum = base.prevItem + $(base.$owlItems[base.currentItem]).data("owl-roundPages");
+
+			if( base.AnubzSumLast !== base.AnubzSum) {
+
+				if(typeof base.options.afterMove === "function") {
+					base.options.afterMove.apply(this,[base.$elem]);
+				}
+
+				if(base.options.autoPlay !== false){
+					base.checkAp();
+				}
+
+				base.AnubzSumLast = base.prevItem + $(base.$owlItems[base.currentItem]).data("owl-roundPages");
+
 			}
-			if(base.options.autoPlay !== false){
-				base.checkAp();
-			}
+
 		},
+
 
 		stop : function(){
 			var base = this;
